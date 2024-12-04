@@ -31,9 +31,6 @@ public class UserServiceImpl implements UserService {
     public void saveUser(UserDto userDto) {
         User user = new User();
         user.setUsername(userDto.getUsername());
-
-        //encrypt the password once we integrate spring security
-        //user.setPassword(userDto.getPassword());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         Role role = roleRepository.findByRolename("ROLE_ADMIN");
         if(role == null){
@@ -43,6 +40,12 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+    private Role checkRoleExist() {
+        Role role = new Role();
+        role.setRolename("ROLE_ADMIN");
+        return roleRepository.save(role);
+    }
+    
     @Override
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
@@ -67,14 +70,8 @@ public class UserServiceImpl implements UserService {
 
     private UserDto convertEntityToDto(User user){
         UserDto userDto = new UserDto();
-        String[] name = user.getUsername().split(" ");
-        userDto.setUsername(name[0]);
+        String name = user.getUsername();
+        userDto.setUsername(name);
         return userDto;
-    }
-
-    private Role checkRoleExist() {
-        Role role = new Role();
-        role.setRolename("ROLE_ADMIN");
-        return roleRepository.save(role);
     }
 }

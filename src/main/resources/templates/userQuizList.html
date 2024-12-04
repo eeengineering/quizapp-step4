@@ -11,7 +11,7 @@
 
 <div class="container">
 
-    <h3>ITエンジニア育成クイズ(ログイン中)</h3>
+	<h3 th:text="|ITエンジニア育成クイズ (${username}さん ログイン中) |"></h3>
     <hr>
 
     <table class="table table-bordered table-striped">
@@ -29,7 +29,7 @@
                 <td th:text="${tempQuiz.category}" />
                 <td th:text="${tempQuiz.quiz}"/>
                 <td>
-                    <a th:href="@{'../'+ ${tempQuiz.quizid}}">クイズへ</a>
+                    <a th:href="@{'../user/'+${username}+'/'+${tempQuiz.quizid}}">クイズへ</a>
                 </td>
                 <td>
                     <span th:if="${tempQuiz.status}=='完了'" th:text="完了"></span>
@@ -38,6 +38,10 @@
             </tr>
         </tbody>
     </table>
+	
+	<form th:action="@{/logout}" method="post">
+	    <input type="submit" name="logout" value="ログアウト"/>
+	</form>
 
 </div>
 

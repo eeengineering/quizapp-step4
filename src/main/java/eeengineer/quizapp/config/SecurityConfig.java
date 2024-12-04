@@ -11,34 +11,23 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
 import eeengineer.quizapp.security.CustomAuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Autowired
-    private UserDetailsService userDetailsService;
-
     @Bean
-    public static PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authorizeHttpRequests((authorize) ->
+    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests((authorize) ->
                         authorize.requestMatchers("/register/**").permitAll()
-                                .requestMatchers("/index").permitAll()
-                                .requestMatchers("/quiz/**").hasRole("ADMIN")
-                                .requestMatchers("/users").hasRole("ADMIN")
+                                .requestMatchers("/quiz/public/**").permitAll()
+                                .requestMatchers("/quiz/list/user/**").hasRole("ADMIN")
                 ).formLogin(
                         form -> form
-                                .loginPage("/login")
+                        		.loginPage("/quiz/public")
                                 .loginProcessingUrl("/login")
-//                                .defaultSuccessUrl("/quiz/list/user/", true) 
+                                .failureUrl("/login?error")
                                 .successHandler(new CustomAuthenticationSuccessHandler())
                                 .permitAll()
                 ).logout(
@@ -48,13 +37,19 @@ public class SecurityConfig {
                 );
         return http.build();
     }
-    
-    
 
+    @Autowired
+    private UserDetailsService userDetailsService;
+    
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder());
+    }
+    
+    @Bean
+    static PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
     }
 }

@@ -1,13 +1,8 @@
 package eeengineer.quizapp.service;
 
 import eeengineer.quizapp.entity.Quiz;
-import eeengineer.quizapp.entity.User;
 import eeengineer.quizapp.repository.QuizRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.sql.PseudoColumnUsage;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,7 +53,7 @@ public class QuizServiceImpl implements QuizService {
 
     @Override
     public void changeStatus(int theId) {
-        Quiz theQuiz = quizRepository.getById(theId);
+        Quiz theQuiz = quizRepository.getReferenceById(theId);
         String quizStatus = theQuiz.getStatus();
         String changeStatus = "";
         if(quizStatus.equals("完了")) {
