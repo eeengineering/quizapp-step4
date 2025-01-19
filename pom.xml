@@ -59,20 +59,31 @@
 		</dependency>
 	</dependencies>
 	
-	<build>
+    <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
+            	<groupId>org.apache.maven.plugins</groupId>
+            	<artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <mainClass>eeengineer.quizapp.QuizApplication</mainClass>
-                            <classpathPrefix>lib</classpathPrefix>
-                        </manifest>
-                    </archive>
-                </configuration>
+            		<finalName>Executable Jar</finalName>
+            		<descriptorRefs>
+            		<descriptorRef>jar-with-dependencies</descriptorRef>
+            		</descriptorRefs>
+            		<archive>
+            			<manifest>
+            				<mainClass>eeengineer.quizapp.QuizApplication</mainClass>
+            			</manifest>
+            		</archive>
+            	</configuration>
+            	<executions>
+            		<execution>
+            			<id>make-assembly</id>
+            			<phase>package</phase>
+            			<goals>
+            				<goal>single</goal>
+            			</goals>
+            		</execution>
+            	</executions>
             </plugin>
         </plugins>
     </build>
