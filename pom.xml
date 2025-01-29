@@ -58,7 +58,6 @@
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
 	</dependencies>
-<<<<<<< HEAD
   <build>
     <resources>
       <resource>
@@ -94,35 +93,4 @@
         </plugin>
     </plugins>
   </build>
-=======
-	
-    <build>
-        <plugins>
-            <plugin>
-            	<groupId>org.apache.maven.plugins</groupId>
-            	<artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-            		<finalName>quizapp</finalName>
-            		<descriptorRefs>
-            		<descriptorRef>jar-with-dependencies</descriptorRef>
-            		</descriptorRefs>
-            		<archive>
-            			<manifest>
-            				<mainClass>eeengineer.quizapp.QuizApplication</mainClass>
-            			</manifest>
-            		</archive>
-            	</configuration>
-            	<executions>
-            		<execution>
-            			<id>make-assembly</id>
-            			<phase>package</phase>
-            			<goals>
-            				<goal>single</goal>
-            			</goals>
-            		</execution>
-            	</executions>
-            </plugin>
-        </plugins>
-    </build>
->>>>>>> bef72463eff34ede1d9f73779e8cd7045a00deab
 </project>
